@@ -37,6 +37,7 @@ char **line_to_array()
 			array[i++] = token;
 			token = strtok(NULL, " ");
 	}
+	array[i] = NULL;
 	return(array);
 	/*
 	To understand what this function returns, it can be modified to print

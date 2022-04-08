@@ -27,7 +27,8 @@ if (child_pid == -1)
 
 if (child_pid == 0)
 {
-	printf("%c", **array);
+	printf("%s\n", array[0]);
+	printf("%s\n", array[1]);
 	if (execve(array[0], array, NULL) == -1) /*change variables for execve*/
 	{
 		perror("Error:");
