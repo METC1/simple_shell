@@ -14,6 +14,7 @@ int main(int argc, char *argv[])
 {
 	char sign = 0;
 	char *array[6];
+	int i;
 
 	if (argc == 1)
 	{
@@ -22,6 +23,10 @@ int main(int argc, char *argv[])
 			_putchar('$');
 			_putchar(' ');
 			*array = line_to_array(argv[0]);
+			for (i = 0; i < 7; i++)
+			{
+			printf("%s\n", array[i]);
+			}
 			exec_command(array);
 			/*process execute code*/
 		}while (sign == 0);
