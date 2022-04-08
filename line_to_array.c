@@ -12,13 +12,13 @@
  * Return: pointer to the array of arguments.
  */
 
-char *line_to_array(char *p)
+char **line_to_array(char *p)
 {
-	char *buffer;
+	char *buffer = NULL;
 	size_t bufsize = 90;
 	char *token;
 	int i = 1;
-	char *array[6];
+	char **array = malloc(sizeof(char)* bufsize);
 
 	buffer = malloc(bufsize * sizeof(char));
 	/*Update error message and return in case that malloc fails*/
@@ -38,7 +38,7 @@ char *line_to_array(char *p)
 			array[i++] = token;
 			token = strtok(NULL, " ");
 	}
-	return(*array);
+	return(array);
 	/*
 	To understand what this function returns, it can be modified to print
 	the elements of *array, each one followed by a new line:
