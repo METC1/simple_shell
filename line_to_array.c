@@ -12,12 +12,12 @@
  * Return: pointer to the array of arguments.
  */
 
-char **line_to_array(char *p)
+char **line_to_array()
 {
 	char *buffer = NULL;
 	size_t bufsize = 90;
 	char *token;
-	int i = 1;
+	int i = 0;
 	char **array = malloc(sizeof(char)* bufsize);
 
 	buffer = malloc(bufsize * sizeof(char));
@@ -29,11 +29,10 @@ char **line_to_array(char *p)
 	}
 	getline(&buffer, &bufsize, stdin);
 	token = strtok(buffer, " ");
-	array[0]= p;
 	/*Insert error option that checks for error if buffer = NULL
 	due to user failing to introduce valid commands at the comand line
 	and, check if is neccesary to include error if strtok fails*/
-	for(i = 1 ; token != NULL ; )
+	for(i = 0 ; token != NULL ; )
 	{
 			array[i++] = token;
 			token = strtok(NULL, " ");

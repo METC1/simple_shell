@@ -14,28 +14,27 @@
 
 int exec_command(char **array)
 {
-pid_t my_pid, child_pid;
+  pid_t child_pid;
 int status;
 
 child_pid = fork ();
-printf("%d", my_pid);
 if (child_pid == -1)
 {
 	perror("Error in fork");
 	return(1);
 	
 }
-my_pid = getpid();
 
 if (child_pid == 0)
 {
-	printf("%s", array[0]);
+	printf("%c", **array);
 	if (execve(array[0], array, NULL) == -1) /*change variables for execve*/
 	{
 		perror("Error:");
+		return(1);
 	}
 	/* Child process replace with execve*/
-	
+	return(0);	
 }
 else
 {

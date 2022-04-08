@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-char **line_to_array(char *p);
+char **line_to_array();
 int _putchar(char c);
 int exec_command(char **array);
 

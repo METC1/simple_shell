@@ -13,8 +13,7 @@
 int main(int argc, char *argv[])
 {
 	char sign = 0;
-	char **array;
-	int i;
+	char **array = NULL;
 
 	if (argc == 1)
 	{
