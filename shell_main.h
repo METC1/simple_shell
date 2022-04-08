@@ -6,5 +6,6 @@
 
 char *line_to_array();
 int _putchar(char c);
+int exec_command(char **array);
 
 #endif
