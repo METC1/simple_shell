@@ -18,7 +18,7 @@ pid_t my_pid, child_pid;
 int status;
 
 child_pid = fork ();
-printf("%s", my_pid);
+printf("%d", my_pid);
 if (child_pid == -1)
 {
 	perror("Error in fork");
