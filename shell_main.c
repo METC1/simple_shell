@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
 	}
 	else
 	{
-		/*array[] = argv[];*/
+		array = argv;
 		exec_command(array);
 		/*process execute code*/
 	}
