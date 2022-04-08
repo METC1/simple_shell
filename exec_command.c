@@ -14,24 +14,25 @@
 
 int exec_command(char **array)
 {
-  pid_t child_pid;
+  pid_t child_pid, werr;
 int status;
 
 child_pid = fork ();
 if (child_pid == -1)
 {
-	perror("Error in fork");
+	perror("Error in exec_command (fork)");
 	return(1);
 	
 }
 
 if (child_pid == 0)
 {
-	printf("%s\n", array[0]);
-	printf("%s\n", array[1]);
+	printf("Array[0]: %s\n", array[0]);
+	printf("Array[1]: %s\n", array[1]);
+	printf("Array[2]: %s\n", array[2]);
 	if (execve(array[0], array, NULL) == -1) /*change variables for execve*/
 	{
-		perror("Error:");
+		perror("Error in exec_command: (execve)");
 		return(1);
 	}
 	/* Child process replace with execve*/
@@ -39,7 +40,11 @@ if (child_pid == 0)
 }
 else
 {
-	wait(&status);
+	werr = wait(&status);
+	if (werr == -1)
+	{
+	perror ("Error in exec_command: (wait)");
+	}
 	return(0);
 	/*Father process, wait*/
 }

@@ -19,16 +19,33 @@ char **line_to_array()
 	char *token;
 	int i = 0;
 	char **array = malloc(sizeof(char)* bufsize);
+	int glinerr;
+
+	if(array == NULL)
+	{
+	perror("Error in line_to_array:(malloc array)");
+	exit (1);
+	}
 
 	buffer = malloc(bufsize * sizeof(char));
 	/*Update error message and return in case that malloc fails*/
 	if(buffer == NULL)
 	{
-		perror("Unable to allocate buffer");
+		perror("Error in line_to_array:(malloc buffer)");
 		exit(1);
 	}
-	getline(&buffer, &bufsize, stdin);
+	glinerr = getline(&buffer, &bufsize, stdin);
+	if (glinerr == -1)
+	{
+	perror("Error in line_to_array: (getline)");
+	exit (1);
+	}
 	token = strtok(buffer, " ");
+	if (buffer == NULL)
+	{
+	perror("Error in line_to_array: strtok buffer");
+	exit (1);
+	}
 	/*Insert error option that checks for error if buffer = NULL
 	due to user failing to introduce valid commands at the comand line
 	and, check if is neccesary to include error if strtok fails*/
