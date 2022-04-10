@@ -7,5 +7,5 @@
 char **line_to_array();
 int _putchar(char c);
 int exec_command(char **array);
-
+int _strcmp(char *s1, char *s2);
 #endif

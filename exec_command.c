@@ -3,6 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include "shell_main.h"
 
 /**
  * exec_command - executes a command with its arguments
@@ -17,6 +18,15 @@ int exec_command(char **array)
   pid_t child_pid, werr;
 int status;
 
+	printf("Array[0]: %s\n", array[0]);
+	printf("Array[1]: %s\n", array[1]);
+	printf("Array[2]: %s\n", array[2]);
+	
+	if (_strcmp(array[0], "exit") == 0)
+	{
+		printf("Exiting.......\n");
+		exit(EXIT_SUCCESS);
+	}
 child_pid = fork ();
 if (child_pid == -1)
 {
@@ -27,9 +37,7 @@ if (child_pid == -1)
 
 if (child_pid == 0)
 {
-	printf("Array[0]: %s\n", array[0]);
-	printf("Array[1]: %s\n", array[1]);
-	printf("Array[2]: %s\n", array[2]);
+
 	if (execve(array[0], array, NULL) == -1) /*change variables for execve*/
 	{
 		perror("Error in exec_command: (execve)");
@@ -37,6 +45,7 @@ if (child_pid == 0)
 	}
 	/* Child process replace with execve*/
 	return(0);	
+	exit(EXIT_SUCCCESS);
 }
 else
 {
