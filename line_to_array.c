@@ -18,6 +18,7 @@ char **line_to_array()
 	size_t bufsize = 90;
 	char *token;
 	int i = 0;
+	int j = 0;
 	char **array = malloc(sizeof(char)* bufsize);
 	int glinerr;
 
@@ -39,6 +40,14 @@ char **line_to_array()
 	{
 	perror("Error in line_to_array: (getline)");
 	exit (1);
+	}
+	/* getting rid of the '\n' at the end of "buffer" as it captures it from the enter in stdin*/
+	j = 0;
+	while (buffer[j] != '\0')
+	{
+		if (buffer[j] == '\n')
+		buffer[j] = '\0';
+		j++;
 	}
 	token = strtok(buffer, " ");
 	if (buffer == NULL)
