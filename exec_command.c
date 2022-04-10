@@ -46,7 +46,7 @@ if (child_pid == 0)
 	}
 	/* Child process replace with execve*/
 	return(0);	
-	exit(EXIT_SUCCCESS);
+	exit(EXIT_SUCCESS);
 }
 else
 {
