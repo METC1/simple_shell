@@ -42,6 +42,7 @@ if (child_pid == 0)
 	{
 		perror("Error in exec_command: (execve)");
 		return(1);
+		exit (EXIT_SUCCESS);
 	}
 	/* Child process replace with execve*/
 	return(0);	
