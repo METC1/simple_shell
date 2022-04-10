@@ -41,8 +41,9 @@ if (child_pid == 0)
 	if (execve(array[0], array, NULL) == -1) /*change variables for execve*/
 	{
 		perror("Error in exec_command: (execve)");
+		exit(EXIT_SUCCESS);
 		return(1);
-		exit (EXIT_SUCCESS);
+		
 	}
 	/* Child process replace with execve*/
 	return(0);	
@@ -55,6 +56,7 @@ else
 	{
 	perror ("Error in exec_command: (wait)");
 	}
+	
 	return(0);
 	/*Father process, wait*/
 }
