@@ -8,6 +8,7 @@
  * and in non-interactive mode
  * @argv: argument vector array
  * @argc: argument count
+ * @envp: Environment variables imported
  * Return: 0 if success.
  */
 int main(int argc, char *argv[], char *envp[])
@@ -18,15 +19,14 @@ int main(int argc, char *argv[], char *envp[])
 
 	if (argc == 1)
 	{
-		do
-		{
+		do {
 			envarray = builtin_env(envp);
 			_putchar('$');
 			_putchar('>');
 			array = line_to_array(argv[0]);
 			exec_command(array, envarray);
 			/*process execute code*/
-		}while (sign == 0);
+		} while (sign == 0);
 	}
 	else
 	{

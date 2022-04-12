@@ -6,7 +6,7 @@
 #include "shell_main.h"
 
 /**
- * builtin_env - copies the env ironment variables for 
+ * builtin_env - copies the env ironment variables for
  * further use and assigns memmory to locate the new array
  * @env: pointer array with system environment
  * Return: Pointer to the new created memmory allocated environment.
@@ -22,7 +22,7 @@ char **envarray = NULL;
 	{
 	}
 	envarray = malloc(sizeof(char *) * (i + 1));
-	if(envarray == NULL)
+	if (envarray == NULL)
 	{
 		perror("Error in builtin_env: (malloc)");
 		exit(1);
@@ -30,9 +30,9 @@ char **envarray = NULL;
 	for (i = 0; env[i] != NULL; i++)
 	{
 		envarray[i] = env[i];
-		
+
 	}
 	envarray[i] = NULL;
-	return(envarray);
+	return (envarray);
 
 }

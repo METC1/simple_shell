@@ -1,3 +1,10 @@
+/**
+ * _strcmp - Compares two strings referenced by pointers
+ * @s1: First string
+ * @s2: Second string
+ * Return: the number of characters before the first non matching character
+ */
+
 int _strcmp(char *s1, char *s2)
 {
 	int i, j;
