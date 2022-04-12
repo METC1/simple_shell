@@ -10,7 +10,7 @@
  * @argc: argument count
  * Return: 0 if success.
  */
-int main(int argc, char *argv[], *envp[])
+int main(int argc, char *argv[], char *envp[])
 {
 	char sign = 0;
 	char **array = NULL;
@@ -20,18 +20,18 @@ int main(int argc, char *argv[], *envp[])
 	{
 		do
 		{
-			envarray = builtin_env(envpr);
+			envarray = builtin_env(envp);
 			_putchar('$');
-			_putchar(' ');
+			_putchar('>');
 			array = line_to_array(argv[0]);
-			exec_command(array);
+			exec_command(array, envarray);
 			/*process execute code*/
 		}while (sign == 0);
 	}
 	else
 	{
 		array = argv;
-		exec_command(array);
+		exec_command(array, envarray);
 		/*process execute code*/
 	}
 	return (0);

@@ -13,20 +13,33 @@
  */
 
 
-int exec_command(char **array)
+int exec_command(char **array, char **envarray)
 {
   pid_t child_pid, werr;
-int status;
+int status, i, j;
 
-	printf("Array[0]: %s\n", array[0]);
-	printf("Array[1]: %s\n", array[1]);
-	printf("Array[2]: %s\n", array[2]);
+	i = 0;
+	j = 0;
 	
 	if (_strcmp(array[0], "exit") == 0)
 	{
 		printf("Exiting.......\n");
 		exit(EXIT_SUCCESS);
 	}
+	if (_strcmp(array[0], "env") == 0)
+	{
+	while (envarray[i] != NULL)
+	{
+	i++;
+	}
+	for ( i = i; j <= i-1; j++)
+	{
+	printf("%s\n", envarray[j]);
+	}
+	return (0);
+	}
+
+
 child_pid = fork ();
 if (child_pid == -1)
 {
