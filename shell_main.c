@@ -40,10 +40,9 @@ int main(int argc, char *argv[], char *envp[])
 		for (i = 0; argv[i] != NULL; i++)
 			;
 		array = malloc(sizeof(char *) * (i - 1));
-		for ( i = 1; argv[i] != NULL; i++)
+		for (i = 1; argv[i] != NULL; i++)
 		{
 		array[i - 1] = argv[i];
-		
 		}
 		envarray = builtin_env(envp);
 		exec_command(argv[0], array, envarray);
