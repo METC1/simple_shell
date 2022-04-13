@@ -31,7 +31,7 @@ int main(int argc, char *argv[], char *envp[])
 			_putchar('$');
 			_putchar('>');
 			array = line_to_array(argv[0]);
-			exec_command(array, envarray);
+			exec_command(argv[0], array, envarray);
 			/*process execute code*/
 		} while (sign == 0);
 	}
@@ -46,7 +46,7 @@ int main(int argc, char *argv[], char *envp[])
 		
 		}
 		envarray = builtin_env(envp);
-		exec_command(array, envarray);
+		exec_command(argv[0], array, envarray);
 	}
 	return (0);
 }

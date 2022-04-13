@@ -10,7 +10,7 @@
  * the first arguments is always the command name
  * Return: int 0.
  */
-int exec_command(char **array, char **envarray)
+int exec_command(char *argv0, char **array, char **envarray)
 {
 pid_t child_pid, werr;
 int status, i, j;
@@ -48,7 +48,7 @@ if (child_pid == 0)
 {
 	if (execve(array[0], array, NULL) == -1) /*change variables for execve*/
 	{
-		perror("Error in exec_command: (execve)");
+		perror(argv0);
 		exit(EXIT_SUCCESS);
 		return (1);
 	}
