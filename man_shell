@@ -1,0 +1,30 @@
+NAME
+		shell - simple command interpreter
+SYNOPSYS
+		shell
+		shell [command string] [argument ...]
+DESCRIPTION
+		shell is a simple command interpreter for the system. 
+
+OVERVIEW
+		Shell is a command that reads lines from either a file or the terminal, interprets them an generally executes other commands.
+		
+INVOCATION
+		If no args are present the shell is considered an interactive shell. An interactive shellprompts before each command.
+	
+BUILTINS
+		Shell builtins are executed internally to the shell, without spawning a new process.
+		Current builtins are 
+	env
+		prints environment variables
+	exit
+		exits the shell
+		
+PATH SEARCH
+		The shell searches each entry in PATH i nturn for the command. The value of the PATH variable should de a series of entries separated by colons.
+
+RETURN VALUE
+
+	Upon succesfull return, this function return the number of characters printed.
+	
+EXAMPLES
