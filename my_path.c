@@ -11,7 +11,6 @@
  * Return: Pointer to the list of path elements
  */
 
-
 char **srch_path(char **envarray)
 {
 int i, j;
@@ -39,14 +38,11 @@ for (i = 0; envarray[i] != NULL; i++)
 		path_raw[j] = envarray[i][j];
 		}
 		path_raw[j] = '\0';
-		printf("Path_raw: %s", path_raw);
 		token = strtok(path_raw, "=");
 		for (j = 0; token != NULL; j++)
 		{
 		token = strtok(NULL, ":");
-		printf("\nToken[%d]: %s\n", j, token);
 		my_path[j] = token;
-		printf("my_path[%d]: %s", j, my_path[j]);
 			}
 		my_path[j] = NULL;
 		}
