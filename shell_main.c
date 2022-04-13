@@ -17,6 +17,7 @@ int main(int argc, char *argv[], char *envp[])
 	char **array = NULL;
 	char **envarray = NULL;
 	char **my_path = NULL;
+	int i = 0;
 
 	if (argc == 1)
 	{
@@ -32,9 +33,16 @@ int main(int argc, char *argv[], char *envp[])
 	}
 	else
 	{
-		envarray = builtin_env(envp);	
-		exec_command(argv, envarray);
+		for (i = 0; argv[i] != NULL; i++)
+			;
+		array = malloc(sizeof(char *) * (i - 1));
+		for ( i = 1; argv[i] != NULL; i++)
+		{
+		array[i - 1] = argv[i];
 		
+		}
+		envarray = builtin_env(envp);
+		exec_command(array, envarray);
 	}
 	return (0);
 }
