@@ -24,6 +24,10 @@ int main(int argc, char *argv[], char *envp[])
 		do {
 			envarray = builtin_env(envp);
 			my_path = srch_path(envarray);
+			if (my_path == NULL)
+			{
+			_putchar('N');
+			}
 			_putchar('$');
 			_putchar('>');
 			array = line_to_array(argv[0]);
