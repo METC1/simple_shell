@@ -1,33 +1,27 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 /**
- * line_to_array - transforms the string typed in the command line by the user,
- * into an array of individual arguments. The string the user enters is assumed
- * to be less than 90 chars long and to contain no more than 6 individual arguments
+ * line_to_array - transforms string typed in the command line by the user,
+ * into an array of individual arguments. The string entered is assumed
+ * to be less than 90 chars long & contain no more than 6 individual arguments
  * , the first position in the array is ocuppied by the supplied argument p.
  * Return: pointer to the array of arguments.
+ *
  */
-
 char **line_to_array()
 {
-	char *buffer = NULL;
+	char *token, *buffer = NULL;
 	size_t bufsize = 90;
-	char *token;
-	int i = 0;
-	int j = 0;
+	int i = 0, j = 0, glinerr;
 	char **array = malloc(sizeof(char) * bufsize);
-	int glinerr;
 
 	if (array == NULL)
 	{
 	perror("Error in line_to_array:(malloc array)");
 	exit(1);
 	}
-
 	buffer = malloc(bufsize * sizeof(char));
-	/*Update error message and return in case that malloc fails*/
 	if (buffer == NULL)
 	{
 		perror("Error in line_to_array:(malloc buffer)");
@@ -39,13 +33,10 @@ char **line_to_array()
 	perror("Error in line_to_array: (getline)");
 	exit(1);
 	}
-	/* getting rid of the '\n' at the end of "buffer" as it captures it from the enter in stdin*/
-	j = 0;
-	while (buffer[j] != '\0')
+	for (j = 0; buffer[j] != '\0'; j++)
 	{
 		if (buffer[j] == '\n')
 		buffer[j] = '\0';
-		j++;
 	}
 	token = strtok(buffer, " ");
 	if (buffer == NULL)
@@ -53,7 +44,6 @@ char **line_to_array()
 	perror("Error in line_to_array: strtok buffer");
 	exit(1);
 	}
-	 /* Insert error option that checks for error if buffer = NULL due to user failing to introduce valid commands at the comand line and, check if is neccesary to include error if strtok fails*/
 	for (i = 0 ; token != NULL ; )
 	{
 		array[i++] = token;

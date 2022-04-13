@@ -19,10 +19,7 @@ char path_raw[200];
 char *token;
 
 j = 0;
-for (i = 0; envarray[i] != NULL; i++)
-	{
-	}
-my_path = malloc(sizeof(char *) * (64));
+my_path = malloc(sizeof(char *) * (128));
 if (my_path == NULL)
 	{
 	perror("Error in srch_path: (malloc)");
@@ -34,18 +31,18 @@ for (i = 0; envarray[i] != NULL; i++)
 	&& envarray[i][3] == 'H')
 		{
 		for (j = 0; envarray[i][j] != '\0'; j++)
-		{
-		path_raw[j] = envarray[i][j];
-		}
+			{
+			path_raw[j] = envarray[i][j];
+			}
 		path_raw[j] = '\0';
 		token = strtok(path_raw, "=");
 		for (j = 0; token != NULL; j++)
-		{
-		token = strtok(NULL, ":");
-		my_path[j] = token;
+			{
+			token = strtok(NULL, ":");
+			my_path[j] = token;
 			}
 		my_path[j] = NULL;
 		}
-		}
-	return (my_path);
 	}
+	return (my_path);
+}
