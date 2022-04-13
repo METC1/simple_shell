@@ -17,6 +17,11 @@ int status, i, j;
 
 i = 0;
 j = 0;
+	
+printf("Array[0]: %s\n", array[0]);
+printf("Array[1]: %s\n", array[1]);
+printf("Array[2]: %s\n", array[2]);
+	
 	if (_strcmp(array[0], "exit") == 0)
 	{
 		printf("Exiting.......\n");

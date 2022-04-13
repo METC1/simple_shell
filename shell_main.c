@@ -16,11 +16,13 @@ int main(int argc, char *argv[], char *envp[])
 	char sign = 0;
 	char **array = NULL;
 	char **envarray = NULL;
+	char **my_path = NULL;
 
 	if (argc == 1)
 	{
 		do {
 			envarray = builtin_env(envp);
+			my_path = srch_path(envarray);
 			_putchar('$');
 			_putchar('>');
 			array = line_to_array(argv[0]);
@@ -30,9 +32,9 @@ int main(int argc, char *argv[], char *envp[])
 	}
 	else
 	{
-		array = argv;
-		exec_command(array, envarray);
-		/*process execute code*/
+		envarray = builtin_env(envp);	
+		exec_command(argv, envarray);
+		
 	}
 	return (0);
 }

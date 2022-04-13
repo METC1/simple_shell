@@ -69,24 +69,3 @@ char **line_to_array()
 	array[i] = NULL;
 	return (array);
 }
-	/*
-	*  To understand what this function returns, it can be modified
-	* to print the elements of *array, each one followed by a new line:
-	* 1. Update the function prototipe to: int (main)
-	* 2. Before the getline line insert the following code:
-	* printf("Enter arguments: ");
-	* 3. Replace the retun line with the following code:
-	* for (i = 0; i < 3; ++i)
-	* {
-	* printf("%s\n", array[i]);
-	* }
-	* return(0);
-	*/
-	/*
-	*  NOTES:
-	* 1. In the event that an array with a non-estimated but exact number
-	* of elements is required; a counter function must be created and you
-	* must feed this function line_to_array. It has not been possible otherwise.
-	* 2. This file has not been checked for Betty compliance.
-	*/
-
