@@ -30,8 +30,8 @@ char **line_to_array()
 	glinerr = getline(&buffer, &bufsize, stdin);
 	if (glinerr == -1)
 	{
-	perror("Error in line_to_array: (getline)");
-	exit(1);
+	/*perror("Error in line_to_array: (getline)");*/
+	exit(0);
 	}
 	for (j = 0; buffer[j] != '\0'; j++)
 	{
