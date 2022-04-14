@@ -27,8 +27,8 @@ int main(int argc, char *argv[], char *envp[])
 			if (my_path == NULL)
 			{
 			}
-			_putchar('$');
-			_putchar('>');
+			/*_putchar('$');*/
+			/*_putchar('>');*/
 			array = line_to_array(argv[0]);
 			exec_command(argv[0], array, envarray);
 			/*process execute code*/
