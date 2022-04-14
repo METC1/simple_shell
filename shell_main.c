@@ -26,7 +26,6 @@ int main(int argc, char *argv[], char *envp[])
 			my_path = srch_path(envarray);
 			if (my_path == NULL)
 			{
-			_putchar('N');
 			}
 			_putchar('$');
 			_putchar('>');

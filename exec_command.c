@@ -14,20 +14,14 @@
 int exec_command(char *argv0, char **array, char **envarray)
 {
 pid_t child_pid;
-int status, i, j;
+int status;
 
-if (_strcmp(array[0], "exit") == 0)
+if ((_strcmp(array[0], "exit") == 0) || (_strcmp(array[0], "env") == 0))
 	{
-	exit(EXIT_SUCCESS);
+	built_ins(array, envarray);
 	}
-if (_strcmp(array[0], "env") == 0)
-	{
-	for (i = 0; envarray[i] != NULL; i++)
-		;
-	for (j = 0; j <= i - 1; j++)
-		printf("%s\n", envarray[j]);
-	return (0);
-	}
+else
+{
 child_pid = fork();
 if (child_pid == -1)
 	{
@@ -52,4 +46,29 @@ else
 		}
 	return (0);
 	}
+}
+return (0);
+}
+int built_ins(char **array, char **envarray)
+{
+int i, j;
+
+if (_strcmp(array[0], "exit") == 0)
+{
+exit(EXIT_SUCCESS);
+return (0);
+}
+if (_strcmp(array[0], "env") == 0)
+{
+for (i = 0; envarray[i] != NULL; i++)
+	{	
+	for (j = 0; envarray[i][j] != '\0'; j++)
+	{
+	_putchar(envarray[i][j]);
+	}
+	_putchar('\n');
+}
+return (0);
+}
+return (0);
 }
