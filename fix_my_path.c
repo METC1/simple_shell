@@ -17,21 +17,19 @@ int i, j;
 
 for (i = 0; my_path[i] != NULL; i++)
 	{
-	    printf("create_my_path[%d]: %s\n", i, my_path[i]);
+	printf("create_my_path[%d]: %s\n", i, my_path[i]);
 	}
-	
 for (i = 0; my_path[i] != NULL; i++)
-    {
-    /*printf("my_path[%d]: %s\n", i, my_path[i]);*/
-    for  (j = 0; my_path[i][j] != '\0'; j++)
-        {
-        }
-    
-    if (my_path[i][j] != '/')
-        {
-        my_path[i][j] = '/';
-        my_path[i][j+1] = '\0';
-        }
-    /*printf("Path[%d]: %s\n", i, my_path[i]);*/
-    }
+	{
+	/*printf("my_path[%d]: %s\n", i, my_path[i]);*/
+	for (j = 0; my_path[i][j] != '\0'; j++)
+		{
+		}
+	if (my_path[i][j] != '/')
+		{
+		my_path[i][j] = '/';
+		my_path[i][j + 1] = '\0';
+		}
+	/*printf("Path[%d]: %s\n", i, my_path[i]);*/
+	}
 }
