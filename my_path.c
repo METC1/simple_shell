@@ -1,48 +1,46 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/wait.h>
 #include "shell_main.h"
 
 /**
- * srch_path - search the environment variables for path
- * @envarray: pointer array with system environment
- * Return: Pointer to the list of path elements
- */
+ * iscommand - verify if the input is an executable file in the path.
+ * @args: list of arguments obtained from the tokenized string input.
+ * Return: return full path where the executable file was found
+ * or NULL otherwise.
+**/
 
-char **srch_path(char **envarray)
+char *iscommand(char **args)
 {
-int i, j;
-char **my_path = NULL;
-char path_raw[200];
-char *token;
+	int i = 0, j = 0;
+	char *str_path = NULL, *file_path = NULL;
+	char **path = NULL;
+	struct stat st;
 
-j = 0;
-my_path = malloc(sizeof(char *) * (128));
-if (my_path == NULL)
+	str_path = _getenv("PATH");
+	path = stringtok(str_path, ":");
+	while (path[i] != NULL)
 	{
-	perror("Error in srch_path: (malloc)");
-	exit(1);
-	}
-for (i = 0; envarray[i] != NULL; i++)
-	{
-	if (envarray[i][0] == 'P' && envarray[i][1] == 'A' && envarray[i][2] == 'T'
-	&& envarray[i][3] == 'H')
+		file_path = calloc(3, (sizeof(char) *
+		((_strlen(path[i])) + (_strlen(args[j])) + 2)));
+		if (file_path == NULL)
 		{
-		for (j = 0; envarray[i][j] != '\0'; j++)
-			{
-			path_raw[j] = envarray[i][j];
-			}
-		path_raw[j] = '\0';
-		token = strtok(path_raw, "=");
-		for (j = 0; token != NULL; j++)
-			{
-			token = strtok(NULL, ":");
-			my_path[j] = token;
-			}
-		my_path[j] = NULL;
+			free(path);
+			free(str_path);
+			return (NULL);
 		}
+		_strcat(file_path, path[i]);
+		_strcat(file_path, "/");
+		_strcat(file_path, args[j]);
+		if (stat(file_path, &st) == 0)
+		{
+			free(path);
+			free(str_path);
+			return (file_path);
+		}
+		i++;
+	free(file_path);
 	}
-	return (my_path);
+	write(STDOUT_FILENO, args[0], _strlen(args[0]));
+	write(STDOUT_FILENO, ": not found\n", 12);
+	free(str_path);
+	free(path);
+	return (NULL);
 }

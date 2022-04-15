@@ -1,80 +1,85 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/wait.h>
 #include "shell_main.h"
-/**
- * exec_command - executes a command with its arguments
- * @array: pointer array with arguments, first the command name
- * @argv0: the shell name
- * @envarray: the environment variables array
- * Return: int 0.
- */
-int exec_command(char *argv0, char **array, char **envarray)
-{
-pid_t child_pid;
-int status;
 
-if ((_strcmp(array[0], "exit") == 0) || (_strcmp(array[0], "env") == 0))
+/**
+ * execarg - checks if the inuput read is valid, when it is
+ * the function forks, create a new child and execute.
+ * @args: list of arguments obtained from the tokenized string input.
+ **/
+
+void execarg(char **args)
+{
+	pid_t child_pid;
+	int status, succes = 0;
+	struct stat st;
+
+	if (args[0][0] >= 'a' && args[0][0] <= 'z')
 	{
-	built_ins(array, envarray);
+		args[0] = iscommand(args);
+		if (args[0] == NULL)
+		{
+			free(args[0]);
+			return;
+		}
+		succes = 1;
 	}
-else
+	if (stat(args[0], &st) == 0)
 	{
-	child_pid = fork();
-	if (child_pid == -1)
+		child_pid = fork();
+		if (child_pid == 0)
 		{
-		perror("Error in exec_command (fork)");
-		return (1);
-		}
-	if (child_pid == 0)
-		{
-		if (execve(array[0], array, NULL) == -1) /*change variables for execve*/
+			if (execve(args[0], args, environ) == -1)
 			{
-			perror(argv0);
-			exit(EXIT_SUCCESS);
+				perror(args[0]);
+				free(args[0]);
+				free(args);
+				exit(-1);
 			}
-		return (0);
-		exit(EXIT_SUCCESS);
 		}
+		else
+			wait(&status);
+		if (succes == 1)
+			free(args[0]);
+	}
 	else
-		{
-		if (wait(&status) == -1)
-			{
-			perror("Error in exec_command: (wait)");
-			}
-		return (0);
-		}
+	{
+		write(STDOUT_FILENO, args[0], _strlen(args[0]));
+		write(STDOUT_FILENO, ": not found\n", 12);
 	}
-return (0);
 }
 /**
- * built_ins - executes abuiltin  command
- * @array: pointer array with arguments, first the command name
- * @envarray: the environment variables array
- * Return: int 0.
+ * exit_status - exit with status read as command.
+ * @args: status in string format to be converted to an integer.
+ * Return: -1 when status is an ilegal number 0 otherwise.
  */
-int built_ins(char **array, char **envarray)
-{
-int i, j;
 
-if (_strcmp(array[0], "exit") == 0)
+int exit_status(char **args)
+{
+	int exstat = 0, i = 0;
+
+	if (args[1] != NULL)
 	{
-	exit(EXIT_SUCCESS);
-	return (0);
-	}
-if (_strcmp(array[0], "env") == 0)
-	{
-	for (i = 0; envarray[i] != NULL; i++)
+		exstat = _atoi(args[1]);
+
+		while (args[1][i] != '\0')
 		{
-		for (j = 0; envarray[i][j] != '\0'; j++)
+			if (args[1][i] < '0' || args[1][i] > '9')
 			{
-			_putchar(envarray[i][j]);
+				write(STDOUT_FILENO, args[0], _strlen(args[0]));
+				write(STDOUT_FILENO, ": Illegal number: ", 19);
+				write(STDOUT_FILENO, args[1], _strlen(args[1]));
+				write(STDOUT_FILENO, "\n", 1);
+				free(args);
+				return (2);
 			}
-		_putchar('\n');
+		i++;
 		}
-		return (0);
+		free(args);
+		return (exstat);
 	}
-	return (0);
+	else
+	{
+		exstat = EXIT_SUCCESS;
+		free(args);
+		return (exstat);
+	}
 }

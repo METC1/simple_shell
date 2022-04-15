@@ -1,50 +1,84 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "shell_main.h"
-
 /**
- * main - entry point to a simple shell, that can work in interactive mode
- * and in non-interactive mode
- * @argv: argument vector array
- * @argc: argument count
- * @envp: Environment variables imported
- * Return: 0 if success.
- */
-int main(int argc, char *argv[], char *envp[])
-{
-	char sign = 0;
-	char **array = NULL;
-	char **envarray = NULL;
-	char **my_path = NULL;
-	int i = 0;
+ * main - simple shell
+ * Return: Always 0.
+ **/
 
-	if (argc == 1)
+int main(int argc, char *argv[])
+{
+	int i = 0, bytes_read = 0, loop = 0, exstat = 0;
+	size_t size = 0;
+	char *str_line = NULL;
+	char **args = NULL;
+
+
+if (argc == 1)
+{
+
+
+	while (loop == 0)
 	{
-		do {
-			envarray = builtin_env(envp);
-			my_path = srch_path(envarray);
-			if (my_path == NULL)
+		signal(SIGINT, ctrlC);
+		if (isatty(STDIN_FILENO) == 1)
+			write(STDOUT_FILENO, "$ ", 2);
+		bytes_read = getline(&str_line, &size, stdin);
+		if (bytes_read == -1)
+		{
+			if (isatty(STDIN_FILENO) == 1)
+				write(STDOUT_FILENO, "\n", 1);
+			break;
+		}
+		if (breakline(str_line) == 0)
+			continue;
+		args = stringtok(str_line, " \t\n");
+		if (args[0] != NULL)
+		{
+			if (_strcmp(args[0], "exit") == 0)
 			{
+				exstat = exit_status(args);
+				if (exstat == 2)
+					continue;
+				free(str_line);
+				exit(exstat);
 			}
-			/*_putchar('$');*/
-			/*_putchar('>');*/
-			array = line_to_array(argv[0]);
-			exec_command(argv[0], array, envarray);
-			/*process execute code*/
-		} while (sign == 0);
+			if (builtin(args) == 1)
+				continue;
+			execarg(args);
+			free(args);
+		}
+		else
+			free(args);
+	}
+	free(str_line);
+	return (0);
+}
+else 
+{
+str_line = malloc(sizeof(char *)* 512);
+for (i = 1; argv[i] != NULL; i++)
+	{
+	_strcat(str_line, argv[i]);   
+	}
+if (breakline(str_line) == 0)
+	{
+	free(str_line);
+	exit(exstat);
+	}
+args = stringtok(str_line, " \t\n");
+if (args[0] != NULL)
+	{
+	if (_strcmp(args[0], "exit") == 0)
+		{
+		exstat = exit_status(args);
+		free(str_line);
+		exit(exstat);
+		}
+		execarg(args);
+		free(args);
 	}
 	else
-	{
-		for (i = 0; argv[i] != NULL; i++)
-			;
-		array = malloc(sizeof(char *) * (i - 1));
-		for (i = 1; argv[i] != NULL; i++)
-		{
-		array[i - 1] = argv[i];
-		}
-		envarray = builtin_env(envp);
-		exec_command(argv[0], array, envarray);
+		free(args);
 	}
+	free(str_line);
 	return (0);
 }

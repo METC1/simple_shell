@@ -1,54 +1,153 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-/**
- * line_to_array - transforms string typed in the command line by the user,
- * into an array of individual arguments. The string entered is assumed
- * to be less than 90 chars long & contain no more than 6 individual arguments
- * , the first position in the array is ocuppied by the supplied argument p.
- * Return: pointer to the array of arguments.
- *
- */
-char **line_to_array()
-{
-	char *token, *buffer = NULL;
-	size_t bufsize = 90;
-	int i = 0, j = 0, glinerr;
-	char **array = malloc(sizeof(char) * bufsize);
+#include "shell_main.h"
 
-	if (array == NULL)
+/**
+  * stringtok - take a string and parse it
+  * into tokens wich are stored in an array.
+  * @str_line: string to be parsed.
+  * @delimitator: separator used to parse.
+  * Return: null terminated array with the tokenes.
+**/
+
+char **stringtok(char *str_line, const char *delimitator)
+{
+	char *token = NULL;
+	int wc = 0, i = 0;
+	char **args;
+while (str_line[i] != '\0')
 	{
-	perror("Error in line_to_array:(malloc array)");
-	exit(1);
+		if (str_line[i] != 32 && str_line[i] != 10
+				       && str_line[i] != 58 && str_line[i] != 9)
+		{
+			while (str_line[i] != 32 && str_line[i] != 10 && str_line[i] != 9
+					&& str_line[i] != 58 && str_line[i] != '\0')
+			{
+				i++;
+			}
+			wc++;
+		}
+		if (str_line[i] == '\0')
+		{
+			break;
+		}
+		i++;
 	}
-	buffer = malloc(bufsize * sizeof(char));
-	if (buffer == NULL)
+	args = malloc(sizeof(char *) * (wc + 1));
+	if (args == NULL)
 	{
-		perror("Error in line_to_array:(malloc buffer)");
-		exit(1);
+		return (NULL);
 	}
-	glinerr = getline(&buffer, &bufsize, stdin);
-	if (glinerr == -1)
+	i = 0;
+	token = strtok(str_line, delimitator);
+	while (token != NULL)
 	{
-	/*perror("Error in line_to_array: (getline)");*/
-	exit(0);
+		args[i] = token;
+		token = strtok(NULL, delimitator);
+		i++;
 	}
-	for (j = 0; buffer[j] != '\0'; j++)
+	args[i] = NULL;
+	return (args);
+}
+/**
+ * _strlen - returns the length of a string.
+ * Return: returns the lenght of a string.
+ * @s: pointer to a char
+ **/
+
+int _strlen(char *s)
+{
+	int len;
+
+	len = 0;
+
+	while (s[len])
 	{
-		if (buffer[j] == '\n')
-		buffer[j] = '\0';
+		len++;
 	}
-	token = strtok(buffer, " ");
-	if (buffer == NULL)
+	return (len);
+}
+
+/**
+ *_strcat - concatenates two strings.
+ * @src: string 2
+ * @dest: string 1
+ * Return: concatenated string
+ **/
+
+char *_strcat(char *dest, char *src)
+{
+	int i, a;
+
+	i = 0;
+	a = 0;
+
+	while (dest[i])
 	{
-	perror("Error in line_to_array: strtok buffer");
-	exit(1);
+		i++;
 	}
-	for (i = 0 ; token != NULL ; )
+	while (src[a])
 	{
-		array[i++] = token;
-		token = strtok(NULL, " ");
+		dest[i] = src[a];
+		i++;
+		a++;
 	}
-	array[i] = NULL;
-	return (array);
+	return (dest);
+}
+
+/**
+ * _strcmp - compares two strings
+ * @s1: first string
+ * @s2: second string
+ * Return: integer (-) s1<s2, 0 s1=s2 and (+) s1>s2
+ **/
+
+int _strcmp(char *s1, char *s2)
+{
+	int i, a;
+
+	i = 0;
+	a = 0;
+
+	if (s1[0] == s2[0])
+	{
+		while (s1[i] == s2[i] && s1[i] && s2[i])
+		{
+			i++;
+		}
+	}
+	a = (s1[i] - '0') -  (s2[i] - '0');
+	return (a);
+}
+
+/**
+ * _atoi - convert a string to an integer.
+ * @str: string
+ * Return: Always 0.
+ */
+
+int _atoi(char *str)
+{
+	int i, sign;
+	double a;
+
+	i = 0;
+	a = 0;
+	sign = 1;
+
+	while (str[i])
+	{
+		if (str[i] == '-')
+		{
+			sign = sign * -1;
+		}
+		if (str[i] - '0' >= 0 && str[i] - '0' <= 9)
+		{
+			a = (a * 10) + str[i] - '0';
+		}
+		else if (a != 0)
+		{
+			break;
+		}
+	i++;
+	}
+	return (a * sign);
 }

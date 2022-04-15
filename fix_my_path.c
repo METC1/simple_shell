@@ -1,35 +1,22 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/wait.h>
 #include "shell_main.h"
 
 /**
- * fix_my_path - checks and fixes my_path final / if not present
- * @my_path: pointer array with path directories
- * Return: NULL only fixes my_path
- */
+ * breakline - look for breaklines.
+ * @str_line: given string.
+ * Return: 0 when the string contains breaklines, 1 otherwise.
+ **/
 
-void fix_my_path(char **my_path)
+int breakline(char *str_line)
 {
-int i, j;
+	int i = 0;
 
-for (i = 0; my_path[i] != NULL; i++)
+	while (str_line[i] != '\0')
 	{
-	printf("create_my_path[%d]: %s\n", i, my_path[i]);
-	}
-for (i = 0; my_path[i] != NULL; i++)
-	{
-	/*printf("my_path[%d]: %s\n", i, my_path[i]);*/
-	for (j = 0; my_path[i][j] != '\0'; j++)
+		if (str_line[i] != 10)
 		{
+			return (1);
 		}
-	if (my_path[i][j] != '/')
-		{
-		my_path[i][j] = '/';
-		my_path[i][j + 1] = '\0';
-		}
-	/*printf("Path[%d]: %s\n", i, my_path[i]);*/
+		i++;
 	}
+	return (0);
 }
